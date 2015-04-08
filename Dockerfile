@@ -1,29 +1,19 @@
-#!/bin/sh
-
-FROM ubuntu:12.04
-RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
+FROM ubuntu:trusty
+MAINTAINER Carlos Killpack <carlos@killpack.me>
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y curl wget 
+RUN apt-get install -y curl xl2tpd supervisor libnss3-dev libnspr4-dev pkg-config libpam0g-dev libcap-ng-dev libcap-ng-utils libselinux1-dev libcurl4-nss-dev libgmp3-dev flex bison gcc make libunbound-dev libnss3-tools 
+# IPSec
+RUN mkdir -p /opt/src
+WORKDIR /opt/src
+RUN curl -s https://download.libreswan.org/libreswan-3.12.tar.gz | tar xvz > /dev/null
+WORKDIR /opt/src/libreswan-3.12
+RUN make programs
+RUN make install
 
-# IPSec / L2TP 
-RUN apt-get install -y openswan xl2tpd 
-
-# Identified dependencies for IPSec / L2TP
-RUN apt-get install -y lsof iptables ufw
-
-# Debugging tools
-RUN apt-get install -y vim netcat nmap net-tools
-
-RUN apt-get install -y ppp
-
-ADD ipsec.conf /etc/ipsec.conf
-ADD ipsec.secrets /etc/ipsec.secrets
-ADD options.xl2tpd /etc/ppp/options.xl2tpd
-ADD chap-secrets /etc/ppp/chap-secrets
-
-ADD ./bin /usr/local/sbin
+COPY ipsec.conf /etc/ipsec.conf
+COPY ipsec.secrets /etc/ipsec.secrets
+COPY xl2tpd.conf /etc/xl2tpd/xl2tpd.conf
+COPY chap-secrets /etc/ppp/chap-secrets
 
 EXPOSE 500/udp 4500/udp 1701/udp
-
-CMD run
