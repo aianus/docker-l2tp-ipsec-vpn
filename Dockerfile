@@ -2,12 +2,12 @@ FROM ubuntu:trusty
 MAINTAINER Carlos Killpack <carlos@killpack.me>
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y curl xl2tpd supervisor libnss3-dev libnspr4-dev pkg-config libpam0g-dev libcap-ng-dev libcap-ng-utils libselinux1-dev libcurl4-nss-dev libgmp3-dev flex bison gcc make libunbound-dev libnss3-tools 
+RUN apt-get install -y curl xl2tpd supervisor libnss3-dev libnspr4-dev pkg-config libpam0g-dev libcap-ng-dev libcap-ng-utils libselinux1-dev libcurl4-nss-dev libgmp3-dev flex bison gcc make libunbound-dev libnss3-tools
 # IPSec
 RUN mkdir -p /opt/src
 WORKDIR /opt/src
-RUN curl -s https://download.libreswan.org/libreswan-3.12.tar.gz | tar xvz > /dev/null
-WORKDIR /opt/src/libreswan-3.12
+RUN curl -s https://download.libreswan.org/libreswan-3.13.tar.gz | tar xvz > /dev/null
+WORKDIR /opt/src/libreswan-3.13
 RUN make programs
 RUN make install
 
