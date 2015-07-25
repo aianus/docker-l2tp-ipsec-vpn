@@ -15,7 +15,7 @@ COPY ipsec.conf /etc/ipsec.conf
 COPY ipsec.secrets /etc/ipsec.secrets
 COPY xl2tpd.conf /etc/xl2tpd/xl2tpd.conf
 COPY chap-secrets /etc/ppp/chap-secrets
-COPY start_vpn.sh /usr/bin
+COPY start_vpn.sh /usr/bin/start_vpn.sh
 
 EXPOSE 500/udp 4500/udp 1701/udp
 
