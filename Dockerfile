@@ -1,5 +1,5 @@
 FROM ubuntu:trusty
-MAINTAINER Carlos Killpack <carlos@killpack.me>
+MAINTAINER Alex Ianus <hire@alexianus.com>
 RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get install -y curl xl2tpd supervisor libnss3-dev libnspr4-dev pkg-config libpam0g-dev libcap-ng-dev libcap-ng-utils libselinux1-dev libcurl4-nss-dev libgmp3-dev flex bison gcc make libunbound-dev libnss3-tools
@@ -16,4 +16,7 @@ COPY ipsec.secrets /etc/ipsec.secrets
 COPY xl2tpd.conf /etc/xl2tpd/xl2tpd.conf
 COPY chap-secrets /etc/ppp/chap-secrets
 
+
 EXPOSE 500/udp 4500/udp 1701/udp
+
+ENTRYPOINT ["start_vpn.sh"]
